@@ -41,9 +41,9 @@ flutter:
     platforms:
       android:
         package: torus.torusresearch.torus_direct
-        pluginClass: TorusDirect
+        pluginClass: TorusDirectPlugin
       ios:
-        pluginClass: TorusDirect
+        pluginClass: TorusDirectPlugin
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

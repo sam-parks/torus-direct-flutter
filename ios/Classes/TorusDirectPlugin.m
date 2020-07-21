@@ -1,4 +1,4 @@
-#import "TorusDirect.h"
+#import "TorusDirectPlugin.h"
 #if __has_include(<torus_direct/torus_direct-Swift.h>)
 #import <torus_direct/torus_direct-Swift.h>
 #else
@@ -9,7 +9,7 @@
 #endif
 
 @implementation TorusDirectPlugin
-+ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
   [SwiftTorusDirectPlugin registerWithRegistrar:registrar];
 }
 @end
