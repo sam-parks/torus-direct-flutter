@@ -1,6 +1,5 @@
 import Flutter
 import UIKit
-import TorusSwiftDirectSDK
 import SafariServices
 
 public class SwiftTorusDirectPlugin: NSObject, FlutterPlugin {
@@ -36,13 +35,16 @@ public class SwiftTorusDirectPlugin: NSObject, FlutterPlugin {
               data in print("private key rebuild", data)
               result(data)
                         }.catch { 
-                                err in print(err)
+                                result(FlutterError.init(code: "NATIVE_ERR",
+                                                 message: "Error: " + err,
+                                                 details: nil))
                               }
-    }
-        
+                               
         default:
             result(FlutterMethodNotImplemented)
         }
+    }
+       
       
   }
 

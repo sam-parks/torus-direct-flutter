@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:torus_direct/torus_direct.dart';
 
 void main() {
@@ -14,22 +12,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  TorusDirect torusDirect = TorusDirect();
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    initTorus();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
+  Future<void> initTorus() async {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      platformVersion = await TorusDirect.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      await torusDirect.init(
+          "single_id_verifier",
+          "google-google",
+          "238941746713-qqe4a7rduuk256d8oi5l0q34qtu9gpfg.apps.googleusercontent.com",
+          "google",
+          "google-shubs");
+    } catch (e) {
+      print(e);
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -37,9 +40,7 @@ class _MyAppState extends State<MyApp> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+    
   }
 
   @override
@@ -47,10 +48,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Torus Direct example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: MaterialButton(onPressed: () async {
+            await torusDirect.triggerLogin();
+          }),
         ),
       ),
     );

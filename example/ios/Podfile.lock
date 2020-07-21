@@ -1,11 +1,25 @@
 PODS:
   - Flutter (1.0.0)
+  - PromiseKit (6.13.1):
+    - PromiseKit/CorePromise (= 6.13.1)
+    - PromiseKit/Foundation (= 6.13.1)
+    - PromiseKit/UIKit (= 6.13.1)
+  - PromiseKit/CorePromise (6.13.1)
+  - PromiseKit/Foundation (6.13.1):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.13.1):
+    - PromiseKit/CorePromise
   - torus_direct (0.0.1):
     - Flutter
+    - PromiseKit
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - torus_direct (from `.symlinks/plugins/torus_direct/ios`)
+
+SPEC REPOS:
+  trunk:
+    - PromiseKit
 
 EXTERNAL SOURCES:
   Flutter:
@@ -15,7 +29,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  torus_direct: cebdaabd3f14f0018d8c2028bac37f1c75366df2
+  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
+  torus_direct: ebafd2653f505b52f3d893d2dae693d745cdb516
 
 PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
 

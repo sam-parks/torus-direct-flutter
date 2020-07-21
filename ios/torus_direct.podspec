@@ -3,6 +3,7 @@
 # Run `pod lib lint torus_direct.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
+
   s.name             = 'torus_direct'
   s.version          = '0.0.1'
   s.summary          = 'A new flutter plugin project.'
@@ -14,7 +15,10 @@ A new flutter plugin project.
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
+  s.dependency 'Torus-utils', '~> 0.0.1'
+  s.dependency 'BestLogger', '~> 0.0.1'
   s.dependency 'Flutter'
+  s.dependency 'PromiseKit'
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
