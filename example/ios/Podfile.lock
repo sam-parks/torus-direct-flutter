@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - torus_direct (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - torus_direct (from `.symlinks/plugins/torus_direct/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  torus_direct:
+    :path: ".symlinks/plugins/torus_direct/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  torus_direct: cebdaabd3f14f0018d8c2028bac37f1c75366df2
+
+PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
+
+COCOAPODS: 1.9.3

@@ -1,20 +1,6 @@
-name: torus_direct
-description: A new Flutter project.
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
-
-
-  
+name: torus_direct_example
+description: Demonstrates how to use the torus_direct plugin.
+publish_to: 'none'
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -23,6 +9,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  torus_direct:
+    # When depending on this package from a real application you should use:
+    #   hello: ^x.y.z
+    # See https://dart.dev/tools/pub/dependencies#version-constraints
+    # The example app is bundled with the plugin so we use a path dependency on
+    # the parent directory to use the current plugin's version. 
+    path: ../
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -37,13 +30,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-  plugin:
-    platforms:
-      android:
-        package: torus.torusresearch.torus_direct
-        pluginClass: TorusDirect
-      ios:
-        pluginClass: TorusDirect
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
