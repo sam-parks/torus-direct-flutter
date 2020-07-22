@@ -36,6 +36,7 @@ target 'Runner' do
   use_frameworks!
   source = 'https://github.com/rathishubham7/swift-logger'
   source = 'https://github.com/torusresearch/torus-utils-swift'
+  source = '../ios/'
   use_modular_headers!
 
   # Flutter Pod
