@@ -22,7 +22,7 @@ Initialize TorusDirect with the verifier options you want:
         redirectURL);
 ```
 
-You can now use the TorusDirect to trigger a login with your verifer options:
+You can now use the TorusDirect to trigger a login with your verifier options:
 
 ```
 torusLoginInfo = await TorusDirect.triggerLogin();
