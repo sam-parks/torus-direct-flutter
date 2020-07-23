@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 class TorusDirect {
   static const _channel = const MethodChannel('torus.flutter.dev/torus-direct');
 
-  Future<void> setOptions(String verifierType, String verifierName,
+  static Future<void> setOptions(String verifierType, String verifierName,
       String clientId, String loginProvider, String verifier, String redirectURL) async {
     try {
       await _channel.invokeMethod('setOptions', {
@@ -21,7 +21,7 @@ class TorusDirect {
     }
   }
 
-  Future<dynamic> triggerLogin() async {
+  static Future<dynamic> triggerLogin() async {
     try {
       return await _channel.invokeMethod('triggerLogin');
     } on PlatformException catch (e) {

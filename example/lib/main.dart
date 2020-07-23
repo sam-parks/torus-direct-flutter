@@ -11,8 +11,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  TorusDirect torusDirect = TorusDirect();
   dynamic _torusLoginInfo = "Waiting...";
+
+  @override
+  void initState() {
+    super.initState();
+    TorusDirect.setOptions(
+        VerifierType.singleLogin.key,
+        "tokenizer-google-ios",
+        "653095671042-san67chucuujmjoo218khq2rb92bh80d.apps.googleusercontent.com",
+        LoginProvider.google.key,
+        "tokenizer-google-ios",
+        "com.googleusercontent.apps.653095671042-san67chucuujmjoo218khq2rb92bh80d:/oauthredirect");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +38,7 @@ class _MyAppState extends State<MyApp> {
               RaisedButton(
                   child: Text("Trigger Torus Login"),
                   onPressed: () async {
-                    _torusLoginInfo = await torusDirect.triggerLogin();
+                    _torusLoginInfo = await TorusDirect.triggerLogin();
                     setState(() {});
                   }),
               Padding(
@@ -35,7 +46,7 @@ class _MyAppState extends State<MyApp> {
                   child: RaisedButton(
                     child: Text('Set Torus Options'),
                     onPressed: () async {
-                      await torusDirect.setOptions(
+                      await TorusDirect.setOptions(
                           VerifierType.singleLogin.key,
                           "tokenizer-google-ios",
                           "653095671042-san67chucuujmjoo218khq2rb92bh80d.apps.googleusercontent.com",

@@ -1,6 +1,6 @@
 {
-    "name": "torus_direct_flutter_sdk",
-    "short_name": "torus_direct_flutter_sdk",
+    "name": "torus_direct",
+    "short_name": "torus_direct",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",

@@ -1,14 +1,30 @@
-# torus_direct_flutter_sdk
+# torus_direct
 
-A new Flutter package project.
+Interact with the Torus Network to assign, store and retrieve private keys. 
 
-## Getting Started
+## Usage 
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+Import the package:
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+```
+import 'package:torus_direct/torus_direct.dart';
+```
+
+Initialize TorusDirect with the verifier options you want:
+
+```
+ TorusDirect.setOptions(
+        VerifierType.singleLogin.key,
+        verifierName,
+        clientId,
+        LoginProvider.google.key,
+        verifier,
+        redirectURL);
+```
+
+You can now use the TorusDirect to trigger a login with your verifer options:
+
+```
+torusLoginInfo = await TorusDirect.triggerLogin();
+```
+
