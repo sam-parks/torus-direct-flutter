@@ -3,20 +3,19 @@ import UIKit
 import SafariServices
 
 public class SwiftTorusDirectPlugin: NSObject, FlutterPlugin {
-
-  let torusSwiftDirectSDK: TorusSwiftDirectSDK;
-
+  var torusSwiftDirectSDK: TorusSwiftDirectSDK;
+  var subVerifierDetails: SubVerifierDetails;
   
   override public init(){
 
-   let subVerifierDetails =  SubVerifierDetails(loginType: .installed,
+    subVerifierDetails =  SubVerifierDetails(loginType: .installed,
                                                     loginProvider: .google,
                                                     clientId: "653095671042-san67chucuujmjoo218khq2rb92bh80d.apps.googleusercontent.com",
-                                                    verifierName: "google-test-1594836702346",
+                                                    verifierName: "tokenizer-google-ios",
                                                     redirectURL: "com.googleusercontent.apps.653095671042-san67chucuujmjoo218khq2rb92bh80d:/oauthredirect")
 
     self.torusSwiftDirectSDK = TorusSwiftDirectSDK(aggregateVerifierType: .singleLogin, 
-                                                            aggregateVerifierName: "google-test-1594836702346", 
+                                                            aggregateVerifierName: "tokenizer-google-ios", 
                                                             subVerifierDetails: [subVerifierDetails], loglevel: .trace)
     super.init()                                              
   }
@@ -31,6 +30,27 @@ public class SwiftTorusDirectPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
+        case "setOptions": 
+            guard let args = call.arguments as? Dictionary<String, String> else {
+              result("iOS could not recognize flutter arguments in method: (sendParams)") 
+              break
+            }
+            let verifierTypeString : String  =  args["verifierType"]! as String
+            let loginProviderString : String =  args["loginProvider"]! as String
+            let clientId : String  =  args["clientId"]! as String
+            let verifierName : String  = args["verifierName"]! as String
+            let redirectURL : String =  args["redirectURL"]! as String
+          
+
+            subVerifierDetails = SubVerifierDetails(loginType: .installed,
+                                                    loginProvider: LoginProviders(rawValue:loginProviderString)!,
+                                                    clientId: clientId,
+                                                    verifierName: verifierName,
+                                                    redirectURL: redirectURL)
+            self.torusSwiftDirectSDK = TorusSwiftDirectSDK(aggregateVerifierType: verifierTypes(rawValue: verifierTypeString)!, 
+                                                            aggregateVerifierName: verifierName, 
+                                                            subVerifierDetails: [subVerifierDetails], loglevel: .trace)
+
         case "triggerLogin":
             self.torusSwiftDirectSDK.triggerLogin(browserType: .external).done
             { 
