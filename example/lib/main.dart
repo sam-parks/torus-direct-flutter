@@ -11,7 +11,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  dynamic _torusLoginInfo = "Waiting...";
+  dynamic _torusLoginInfo = "Waiting for Torus Login Info...";
 
   @override
   void initState() {
@@ -34,6 +34,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               RaisedButton(
                   child: Text("Trigger Torus Login"),
@@ -42,20 +43,9 @@ class _MyAppState extends State<MyApp> {
                     setState(() {});
                   }),
               Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RaisedButton(
-                    child: Text('Set Torus Options'),
-                    onPressed: () async {
-                      await TorusDirect.setOptions(
-                          VerifierType.singleLogin.key,
-                          "tokenizer-google-ios",
-                          "653095671042-san67chucuujmjoo218khq2rb92bh80d.apps.googleusercontent.com",
-                          LoginProvider.google.key,
-                          "tokenizer-google-ios",
-                          "com.googleusercontent.apps.653095671042-san67chucuujmjoo218khq2rb92bh80d:/oauthredirect");
-                    },
-                  )),
-              Text(_torusLoginInfo)
+                padding: const EdgeInsets.all(8.0),
+                child: Text(_torusLoginInfo),
+              )
             ],
           ),
         ),
