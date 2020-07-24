@@ -13,10 +13,7 @@ import torus_direct
   }
 
   override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-    print("hello")
-      
     TorusSwiftDirectSDK.handle(url: url)
-      
     return true
   }
 }
