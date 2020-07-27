@@ -14,10 +14,10 @@ Initialize TorusDirect depending on the login you require:
 
 ```
  TorusDirect.setOptions(
-        VerifierType.singleLogin.key,
+        VerifierType.singleLogin.value,
         verifierName,
         <your-client-id>,
-        LoginProvider.google.key,
+        LoginProvider.google.value,
         google,
         <your-redirect-url>);
 ```

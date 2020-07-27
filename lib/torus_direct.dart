@@ -7,8 +7,13 @@ class TorusDirect {
 
   // Set your verifier options for your logins.
 
-  static Future<void> setOptions(String verifierType, String verifierName,
-      String clientId, String loginProvider, String verifier, String redirectURL) async {
+  static Future<void> setOptions(
+      String verifierType,
+      String verifierName,
+      String clientId,
+      String loginProvider,
+      String verifier,
+      String redirectURL) async {
     try {
       await _channel.invokeMethod('setOptions', {
         "verifierType": verifierType,
@@ -44,7 +49,7 @@ enum VerifierType {
 enum LoginProvider { google, facebook, twitch, reddit, discord, auth0 }
 
 extension VerifierExtension on VerifierType {
-  String get key {
+  String get value {
     switch (this) {
       case VerifierType.singleLogin:
         return "single_login";
@@ -65,7 +70,7 @@ extension VerifierExtension on VerifierType {
 }
 
 extension LoginProviderExtension on LoginProvider {
-  String get key {
+  String get value {
     switch (this) {
       case LoginProvider.google:
         return "google";

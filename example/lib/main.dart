@@ -17,10 +17,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     TorusDirect.setOptions(
-        VerifierType.singleLogin.key,
+        VerifierType.singleLogin.value,
         "tokenizer-google-ios",
         "653095671042-san67chucuujmjoo218khq2rb92bh80d.apps.googleusercontent.com",
-        LoginProvider.google.key,
+        LoginProvider.google.value,
         "tokenizer-google-ios",
         "com.googleusercontent.apps.653095671042-san67chucuujmjoo218khq2rb92bh80d:/oauthredirect");
   }
