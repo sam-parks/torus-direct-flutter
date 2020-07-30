@@ -16,7 +16,7 @@ class TorusDirect {
       String verifier,
       String redirectURL) async {
     try {
-      await _channel.invokeMethod('setOptions', {
+      await _channel.invokeMethod('setVerifierDetails', {
         "loginType": loginType,
         "verifierType": verifierType,
         "verifierName": verifierName,
