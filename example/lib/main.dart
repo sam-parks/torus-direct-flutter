@@ -79,10 +79,10 @@ class _MyAppState extends State<MyApp> {
         LoginType.installed.value,
         VerifierType.singleLogin.value,
         "google-ios",
-        "238941746713-vfap8uumijal4ump28p9jd3lbe6onqt4.apps.googleusercontent.com",
+        "360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3.apps.googleusercontent.com",
         LoginProvider.google.value,
         "google-ios",
-        "com.googleusercontent.apps.238941746713-vfap8uumijal4ump28p9jd3lbe6onqt4:/oauthredirect");
+        "com.googleusercontent.apps.360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3:/oauthredirect");
     _torusLoginInfo = await TorusDirect.triggerLogin();
     setState(() {
       _privateKey = _torusLoginInfo['privateKey'];
