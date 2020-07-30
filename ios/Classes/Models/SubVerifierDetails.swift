@@ -8,9 +8,9 @@ import UIKit
 import Foundation
 import PromiseKit
 
-public enum SubVerifierType{
-    case installed
-    case web
+public enum SubVerifierType : String{
+    case installed = "installed"
+    case web = "web"
 }
 
 public struct SubVerifierDetails {

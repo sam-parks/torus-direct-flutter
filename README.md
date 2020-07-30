@@ -14,6 +14,7 @@ Initialize TorusDirect depending on the login you require:
 
 ```
  TorusDirect.setOptions(
+        LoginType.installed.value,
         VerifierType.singleLogin.value,
         verifierName,
         <your-client-id>,

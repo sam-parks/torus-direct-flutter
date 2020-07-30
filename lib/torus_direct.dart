@@ -8,6 +8,7 @@ class TorusDirect {
   // Set your verifier options for your logins.
 
   static Future<void> setOptions(
+      String loginType,
       String verifierType,
       String verifierName,
       String clientId,
@@ -16,6 +17,7 @@ class TorusDirect {
       String redirectURL) async {
     try {
       await _channel.invokeMethod('setOptions', {
+        "loginType": loginType,
         "verifierType": verifierType,
         "verifierName": verifierName,
         "clientId": clientId,
@@ -29,12 +31,14 @@ class TorusDirect {
   }
 
   // Trigger the Torus Login.
+  // Returns a
 
-  static Future<dynamic> triggerLogin() async {
+  static Future<Map<dynamic, dynamic>> triggerLogin() async {
     try {
       return await _channel.invokeMethod('triggerLogin');
     } on PlatformException catch (e) {
       print(e);
+      throw e;
     }
   }
 }
@@ -46,7 +50,24 @@ enum VerifierType {
   orAggregateVerifier
 }
 
+enum LoginType { web, installed }
+
 enum LoginProvider { google, facebook, twitch, reddit, discord, auth0 }
+
+extension LoginTypeExtension on LoginType {
+  String get value {
+    switch (this) {
+      case LoginType.web:
+        return "web";
+        break;
+      case LoginType.installed:
+        return "installed";
+        break;
+      default:
+        return "web";
+    }
+  }
+}
 
 extension VerifierExtension on VerifierType {
   String get value {

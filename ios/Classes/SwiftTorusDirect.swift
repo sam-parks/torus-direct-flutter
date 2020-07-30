@@ -24,9 +24,10 @@ public class SwiftTorusDirectPlugin: NSObject, FlutterPlugin {
             let clientId : String  =  args["clientId"]! as String
             let verifierName : String  = args["verifierName"]! as String
             let redirectURL : String =  args["redirectURL"]! as String
+            let loginType : String = args["loginType"]! as String
           
 
-            subVerifierDetails = SubVerifierDetails(loginType: .installed,
+            subVerifierDetails = SubVerifierDetails(loginType: SubVerifierType(rawValue:loginType)!,
                                                     loginProvider: LoginProviders(rawValue:loginProviderString)!,
                                                     clientId: clientId,
                                                     verifierName: verifierName,
@@ -34,6 +35,7 @@ public class SwiftTorusDirectPlugin: NSObject, FlutterPlugin {
             self.torusSwiftDirectSDK = TorusSwiftDirectSDK(aggregateVerifierType: verifierTypes(rawValue: verifierTypeString)!, 
                                                             aggregateVerifierName: verifierName, 
                                                             subVerifierDetails: [subVerifierDetails!], loglevel: .trace)
+            result(true)
 
         case "triggerLogin":
             self.torusSwiftDirectSDK!.triggerLogin(browserType: .external).done

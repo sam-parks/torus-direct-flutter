@@ -11,19 +11,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  dynamic _torusLoginInfo = "Waiting for Torus Login Info...";
-
-  @override
-  void initState() {
-    super.initState();
-    TorusDirect.setOptions(
-        VerifierType.singleLogin.value,
-        "tokenizer-google-ios",
-        "653095671042-san67chucuujmjoo218khq2rb92bh80d.apps.googleusercontent.com",
-        LoginProvider.google.value,
-        "tokenizer-google-ios",
-        "com.googleusercontent.apps.653095671042-san67chucuujmjoo218khq2rb92bh80d:/oauthredirect");
-  }
+  dynamic _torusLoginInfo;
+  String _currentVerifier = "Google";
+  String _privateKey = "Waiting for login...";
 
   @override
   Widget build(BuildContext context) {
@@ -36,20 +26,131 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              RaisedButton(
-                  child: Text("Trigger Torus Login"),
-                  onPressed: () async {
-                    _torusLoginInfo = await TorusDirect.triggerLogin();
-                    setState(() {});
-                  }),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(_torusLoginInfo),
+                child: RaisedButton(
+                  child: Text("Google Login"),
+                  onPressed: _googleLogin,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RaisedButton(
+                  child: Text("Facebook Login"),
+                  onPressed: _facebookLogin,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RaisedButton(
+                  child: Text("Reddit Login"),
+                  onPressed: _redditLogin,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RaisedButton(
+                  child: Text("Twitch Login"),
+                  onPressed: _twitchLogin,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: RaisedButton(
+                  child: Text("Discord Login"),
+                  onPressed: _discordLogin,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  _currentVerifier + " key: " + _privateKey,
+                ),
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  _googleLogin() async {
+    TorusDirect.setOptions(
+        LoginType.installed.value,
+        VerifierType.singleLogin.value,
+        "google-ios",
+        "238941746713-vfap8uumijal4ump28p9jd3lbe6onqt4.apps.googleusercontent.com",
+        LoginProvider.google.value,
+        "google-ios",
+        "com.googleusercontent.apps.238941746713-vfap8uumijal4ump28p9jd3lbe6onqt4:/oauthredirect");
+    _torusLoginInfo = await TorusDirect.triggerLogin();
+    setState(() {
+      _privateKey = _torusLoginInfo['privateKey'];
+      _currentVerifier = "Google";
+    });
+  }
+
+  _facebookLogin() async {
+    TorusDirect.setOptions(
+        LoginType.installed.value,
+        VerifierType.singleLogin.value,
+        "facebook-shubs",
+        "659561074900150",
+        LoginProvider.facebook.value,
+        "facebook-shubs",
+        "flutter://flutter-ios/oauthCallback");
+    _torusLoginInfo = await TorusDirect.triggerLogin();
+    setState(() {
+      _privateKey = _torusLoginInfo['privateKey'];
+      _currentVerifier = "Facebook";
+    });
+  }
+
+  _twitchLogin() async {
+    TorusDirect.setOptions(
+        LoginType.web.value,
+        VerifierType.singleLogin.value,
+        "twitch-shubs",
+        "p560duf74b2bidzqu6uo0b3ot7qaao",
+        LoginProvider.twitch.value,
+        "twitch-shubs",
+        "flutter://flutter-ios/oauthCallback");
+    _torusLoginInfo = await TorusDirect.triggerLogin();
+    setState(() {
+      _currentVerifier = "Twitch";
+      _privateKey = _torusLoginInfo['privateKey'];
+    });
+  }
+
+  _redditLogin() async {
+    TorusDirect.setOptions(
+        LoginType.web.value,
+        VerifierType.singleLogin.value,
+        "reddit-shubs",
+        "rXIp6g2y3h1wqg",
+        LoginProvider.reddit.value,
+        "reddit-shubs",
+        "flutter://flutter-ios/oauthCallback");
+    _torusLoginInfo = await TorusDirect.triggerLogin();
+    setState(() {
+      _currentVerifier = "Reddit";
+      _privateKey = _torusLoginInfo['privateKey'];
+    });
+  }
+
+  _discordLogin() async {
+    await TorusDirect.setOptions(
+        LoginType.web.value,
+        VerifierType.singleLogin.value,
+        "discord-shubs",
+        "700259843063152661",
+        LoginProvider.discord.value,
+        "discord-shubs",
+        "flutter://flutter-ios/oauthCallback");
+    _torusLoginInfo = await TorusDirect.triggerLogin();
+    setState(() {
+      _currentVerifier = "Discord";
+      _privateKey = _torusLoginInfo['privateKey'];
+    });
   }
 }

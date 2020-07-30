@@ -4,7 +4,6 @@
 //
 //  Created by Shubham Rathi on 24/4/2020.
 //
-
 import Foundation
 import UIKit
 import TorusUtils
@@ -35,7 +34,7 @@ open class TorusSwiftDirectSDK{
     }
     
     
-    public func triggerLogin(controller: UIViewController? = nil, browserType: URLOpenerTypes = .sfsafari) -> Promise<String>{
+    public func triggerLogin(controller: UIViewController? = nil, browserType: URLOpenerTypes = .sfsafari) -> Promise<[String:Any]>{
         
         // Set browser
         self.authorizeURLHandler = browserType
@@ -54,8 +53,8 @@ open class TorusSwiftDirectSDK{
         }
     }
     
-    func handleSingleLogins(controller: UIViewController?) -> Promise<String>{
-        let (tempPromise, seal) = Promise<String>.pending()
+    func handleSingleLogins(controller: UIViewController?) -> Promise<[String:Any]>{
+        let (tempPromise, seal) = Promise<[String:Any]>.pending()
         if let subVerifier = self.subVerifierDetails.first{
             let loginURL = subVerifier.getLoginURL()
             observeCallback{ url in
@@ -68,16 +67,21 @@ open class TorusSwiftDirectSDK{
                     responseParameters += fragment.parametersFromQueryString
                 }
                 
-                subVerifier.getUserInfo(responseParameters: responseParameters).then{ data -> Promise<String> in
-                    self.logger.info(data)
-                    
+                subVerifier.getUserInfo(responseParameters: responseParameters).then{ newData -> Promise<(String, [String:Any])> in
+                    self.logger.info(newData)
+                    var data = newData
                     let verifierId = data["verifierId"] as! String
                     let idToken = data["tokenForKeys"] as! String
+                    data.removeValue(forKey: "tokenForKeys")
+                    data.removeValue(forKey: "verifierId")
+                    
                     let extraParams = ["verifieridentifier": self.aggregateVerifierName, "verifier_id":verifierId] as [String : Any]
                     let buffer: Data = try! NSKeyedArchiver.archivedData(withRootObject: extraParams, requiringSecureCoding: false)
                     
-                    return self.torusUtils.retrieveShares(endpoints: self.endpoints, verifierIdentifier: self.aggregateVerifierName, verifierId: verifierId, idToken: idToken, extraParams: buffer)
-                }.done{data in
+                    return self.torusUtils.retrieveShares(endpoints: self.endpoints, verifierIdentifier: self.aggregateVerifierName, verifierId: verifierId, idToken: idToken, extraParams: buffer).map{ ($0, data)}
+                }.done{privateKey, newData in
+                    var data = newData
+                    data["privateKey"] = privateKey
                     seal.fulfill(data)
                 }.catch{err in
                     print("err in ", err)
@@ -89,8 +93,8 @@ open class TorusSwiftDirectSDK{
         return tempPromise
     }
     
-    func handleSingleIdVerifier(controller: UIViewController?) -> Promise<String>{
-        let (tempPromise, seal) = Promise<String>.pending()
+    func handleSingleIdVerifier(controller: UIViewController?) -> Promise<[String:Any]>{
+        let (tempPromise, seal) = Promise<[String:Any]>.pending()
         if let subVerifier = self.subVerifierDetails.first{
             let loginURL = subVerifier.getLoginURL()
             observeCallback{ url in
@@ -102,15 +106,21 @@ open class TorusSwiftDirectSDK{
                     responseParameters += fragment.parametersFromQueryString
                 }
                 
-                subVerifier.getUserInfo(responseParameters: responseParameters).then{ data -> Promise<String> in
+                subVerifier.getUserInfo(responseParameters: responseParameters).then{ newData -> Promise<(String, [String:Any])> in
+                    var data = newData
                     let verifierId = data["verifierId"] as! String
                     let idToken = data["tokenForKeys"] as! String
+                    data.removeValue(forKey: "tokenForKeys")
+                    data.removeValue(forKey: "verifierId")
+
                     let extraParams = ["verifieridentifier": self.aggregateVerifierName, "verifier_id":verifierId, "sub_verifier_ids":[subVerifier.subVerifierId], "verify_params": [["verifier_id": verifierId, "idtoken": idToken]]] as [String : Any]
                     let dataExample: Data = try! NSKeyedArchiver.archivedData(withRootObject: extraParams, requiringSecureCoding: false)
                     let hashedOnce = idToken.sha3(.keccak256)
                     
-                    return self.torusUtils.retrieveShares(endpoints: self.endpoints, verifierIdentifier: self.aggregateVerifierName, verifierId: verifierId, idToken: hashedOnce, extraParams: dataExample)
-                }.done{data in
+                    return self.torusUtils.retrieveShares(endpoints: self.endpoints, verifierIdentifier: self.aggregateVerifierName, verifierId: verifierId, idToken: hashedOnce, extraParams: dataExample).map{ ($0, data)}
+                }.done{privateKey, newData in
+                    var data = newData
+                    data["privateKey"] = privateKey
                     seal.fulfill(data)
                 }.catch{err in
                     print("err in ", err)
@@ -122,12 +132,12 @@ open class TorusSwiftDirectSDK{
         return tempPromise
     }
     
-    func handleAndAggregateVerifier(controller: UIViewController?) -> Promise<String>{
+    func handleAndAggregateVerifier(controller: UIViewController?) -> Promise<[String:Any]>{
         // TODO: implement verifier
         return Promise(error: TSDSError.methodUnavailable)
     }
     
-    func handleOrAggregateVerifier(controller: UIViewController?) -> Promise<String>{
+    func handleOrAggregateVerifier(controller: UIViewController?) -> Promise<[String:Any]>{
         // TODO: implement verifier
         return Promise(error: TSDSError.methodUnavailable)
     }

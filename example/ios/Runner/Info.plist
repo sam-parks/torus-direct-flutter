@@ -25,8 +25,15 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.653095671042-san67chucuujmjoo218khq2rb92bh80d</string>
+				<string>flutter</string>
+				<string>com.googleusercontent.apps.238941746713-vfap8uumijal4ump28p9jd3lbe6onqt4</string>
 			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array/>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
