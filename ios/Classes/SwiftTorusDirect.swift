@@ -14,7 +14,7 @@ public class SwiftTorusDirectPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
-        case "setOptions": 
+        case "setVerifierDetails": 
             guard let args = call.arguments as? Dictionary<String, String> else {
               result("iOS could not recognize flutter arguments in method: (sendParams)") 
               break

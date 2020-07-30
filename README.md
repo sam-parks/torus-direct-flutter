@@ -10,10 +10,10 @@ Import the package:
 import 'package:torus_direct/torus_direct.dart';
 ```
 
-Initialize TorusDirect depending on the login you require:
+Set the verifier details for TorusDirect depending on the login you require:
 
 ```
- TorusDirect.setOptions(
+ TorusDirect.setVerifierDetails(
         LoginType.installed.value,
         VerifierType.singleLogin.value,
         verifierName,
@@ -24,7 +24,7 @@ Initialize TorusDirect depending on the login you require:
 ```
 Logins are dependent on verifier scripts/verifiers. There are other verifiers including singleIdVerifier, andAggregateVerifier, orAggregateVerifier and singleLogin of which you may need to use depending on your required logins. To get your application's verifier script setup, do reach out to hello@tor.us or to read more about verifiers do checkout the docs.
 
-After initialization, you can use TorusDirect to trigger a login with your verifier options:
+After setting your verifier, you can use TorusDirect to trigger a login:
 
 ```
 torusLoginInfo = await TorusDirect.triggerLogin();

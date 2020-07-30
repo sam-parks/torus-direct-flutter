@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   _googleLogin() async {
-    TorusDirect.setOptions(
+    TorusDirect.setVerifierDetails(
         LoginType.installed.value,
         VerifierType.singleLogin.value,
         "google-ios",
@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   _facebookLogin() async {
-    TorusDirect.setOptions(
+    TorusDirect.setVerifierDetails(
         LoginType.installed.value,
         VerifierType.singleLogin.value,
         "facebook-shubs",
@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   _twitchLogin() async {
-    TorusDirect.setOptions(
+    TorusDirect.setVerifierDetails(
         LoginType.web.value,
         VerifierType.singleLogin.value,
         "twitch-shubs",
@@ -123,7 +123,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   _redditLogin() async {
-    TorusDirect.setOptions(
+    TorusDirect.setVerifierDetails(
         LoginType.web.value,
         VerifierType.singleLogin.value,
         "reddit-shubs",
@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   _discordLogin() async {
-    await TorusDirect.setOptions(
+    TorusDirect.setVerifierDetails(
         LoginType.web.value,
         VerifierType.singleLogin.value,
         "discord-shubs",

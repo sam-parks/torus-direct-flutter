@@ -7,7 +7,7 @@ class TorusDirect {
 
   // Set your verifier options for your logins.
 
-  static Future<void> setOptions(
+  static Future<void> setVerifierDetails(
       String loginType,
       String verifierType,
       String verifierName,
@@ -31,8 +31,6 @@ class TorusDirect {
   }
 
   // Trigger the Torus Login.
-  // Returns a
-
   static Future<Map<dynamic, dynamic>> triggerLogin() async {
     try {
       return await _channel.invokeMethod('triggerLogin');
