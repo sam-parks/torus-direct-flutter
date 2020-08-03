@@ -78,10 +78,10 @@ class _MyAppState extends State<MyApp> {
     TorusDirect.setVerifierDetails(
         LoginType.installed.value,
         VerifierType.singleLogin.value,
-        "google-ios",
+        "samtwo-google",
         "360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3.apps.googleusercontent.com",
         LoginProvider.google.value,
-        "google-ios",
+        "samtwo-google",
         "com.googleusercontent.apps.360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3:/oauthredirect");
     _torusLoginInfo = await TorusDirect.triggerLogin();
     setState(() {
