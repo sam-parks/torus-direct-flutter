@@ -15,7 +15,7 @@ flutter:
   plugin:
     platforms:
       android: 
-        package: com.torusresearch.torus_direct
+        package: com.torusresearch.torusdirect
         pluginClass: TorusDirectPlugin
       ios:
         pluginClass: TorusDirectPlugin
