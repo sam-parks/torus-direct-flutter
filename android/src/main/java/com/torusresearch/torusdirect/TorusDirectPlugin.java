@@ -60,6 +60,7 @@ public class TorusDirectPlugin implements FlutterPlugin, MethodCallHandler,  Act
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    System.out.println("onAttachedToEngine called");
     channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "torus.flutter.dev/torus-direct");
     this.context = flutterPluginBinding.getApplicationContext();
     channel.setMethodCallHandler(this);
@@ -75,8 +76,8 @@ public class TorusDirectPlugin implements FlutterPlugin, MethodCallHandler,  Act
   // depending on the user's project. onAttachedToEngine or registerWith must both be defined
   // in the same class.
   public static void registerWith(Registrar registrar) {
+    System.out.println("registerWith called");
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "torus.flutter.dev/torus-direct");
-
     channel.setMethodCallHandler(new TorusDirectPlugin());
   }
 
@@ -101,7 +102,7 @@ public class TorusDirectPlugin implements FlutterPlugin, MethodCallHandler,  Act
                   verifierName,
                   new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build());
 
-        DirectSdkArgs directSdkArgs = new DirectSdkArgs(redirectURL, TorusNetwork.TESTNET, "0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183");
+        DirectSdkArgs directSdkArgs = new DirectSdkArgs("torusapp://org.torusresearch.torusdirectandroid/redirect", TorusNetwork.TESTNET, "0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183");
           this.torusDirectSDK  = new TorusDirectSdk(directSdkArgs, this.context);
 
 

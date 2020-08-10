@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
         "samtwo-google",
         "360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3.apps.googleusercontent.com",
         LoginProvider.google.value,
-        "samtwo-googlegit",
+        "samtwo-google",
         "com.googleusercontent.apps.360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3:/oauthredirect");
     _torusLoginInfo = await TorusDirect.triggerLogin();
     setState(() {

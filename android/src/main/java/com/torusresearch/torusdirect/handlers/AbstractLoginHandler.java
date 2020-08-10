@@ -55,7 +55,8 @@ public abstract class AbstractLoginHandler implements ILoginHandler {
             StartUpActivity.loginHandler.set(this);
         }
         Intent intent = new Intent(context, StartUpActivity.class).putExtra(StartUpActivity.URL, finalURL);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         context.startActivity(intent);
         return loginWindowResponseCompletableFuture;
     }
