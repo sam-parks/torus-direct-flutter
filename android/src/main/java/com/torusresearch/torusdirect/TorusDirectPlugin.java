@@ -2,9 +2,10 @@ package com.torusresearch.torusdirect;
 
 import android.app.Activity;
 import android.util.Log;
-
 import android.content.Context;
 import androidx.annotation.NonNull;
+import android.os.Bundle;
+
 import java.util.HashMap;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -15,22 +16,24 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 
-import com.torusresearch.torusdirect.TorusDirectSdk;
 import com.torusresearch.torusdirect.types.LoginType;
 import com.torusresearch.torusdirect.types.SubVerifierDetails;
 import com.torusresearch.torusdirect.types.Auth0ClientOptions;
 import com.torusresearch.torusdirect.types.TorusLoginResponse;
 import com.torusresearch.torusdirect.types.DirectSdkArgs;
 import com.torusresearch.torusdirect.types.TorusNetwork;
+import com.torusresearch.torusdirect.types.TorusVerifierUnionResponse;
 
+import com.torusresearch.torusdirect.R;
+import androidx.appcompat.app.AppCompatActivity;
 import java8.util.concurrent.CompletableFuture;
-import android.content.Context;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 
+
+
 /** TorusDirect */
-public class TorusDirectPlugin implements FlutterPlugin, MethodCallHandler,  ActivityAware  {
+public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, ActivityAware  {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -40,6 +43,7 @@ public class TorusDirectPlugin implements FlutterPlugin, MethodCallHandler,  Act
   private MethodChannel channel;
   private TorusDirectSdk torusDirectSDK;
   private SubVerifierDetails subVerifierDetails;
+
 
   public void  onDetachedFromActivity() {
 
@@ -102,21 +106,37 @@ public class TorusDirectPlugin implements FlutterPlugin, MethodCallHandler,  Act
                   verifierName,
                   new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build());
 
-        DirectSdkArgs directSdkArgs = new DirectSdkArgs("torusapp://org.torusresearch.torusdirectandroid/redirect", TorusNetwork.TESTNET, "0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183");
+        DirectSdkArgs directSdkArgs = new DirectSdkArgs("torusapp://io.flutter.app.FlutterApplication/redirect", TorusNetwork.TESTNET, "0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183");
           this.torusDirectSDK  = new TorusDirectSdk(directSdkArgs, this.context);
-
+        result.success(true);
 
       case "triggerLogin":
-        try{
-          CompletableFuture<TorusLoginResponse> torusLoginResponseCompletableFuture =  this.torusDirectSDK.triggerLogin(this.subVerifierDetails);
-          TorusLoginResponse torusLoginResponse = torusLoginResponseCompletableFuture.get();
-          Log.d(TorusDirectPlugin.class.getSimpleName(), "Private Key: " + torusLoginResponse.getPrivateKey());
-          Log.d(TorusDirectPlugin.class.getSimpleName(), "Public Address: " + torusLoginResponse.getPublicAddress());
-        }
-        catch (ExecutionException | InterruptedException e) {
-          e.printStackTrace();
+        Executors.newFixedThreadPool(10).submit(() -> {
+          try {
+            CompletableFuture<TorusLoginResponse> torusLoginResponseCompletableFuture = this.torusDirectSDK.triggerLogin(new SubVerifierDetails(LoginType.GOOGLE,
+                    "google-lrc",
+                    "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com",
+                    new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build()));
+            TorusLoginResponse torusLoginResponse = torusLoginResponseCompletableFuture.get();
+            TorusVerifierUnionResponse userInfo = torusLoginResponse.getUserInfo();
+            Log.d(TorusDirectPlugin.class.getSimpleName(), "Private Key: " + torusLoginResponse.getPrivateKey());
+            Log.d(TorusDirectPlugin.class.getSimpleName(), "Public Address: " + torusLoginResponse.getPublicAddress());
+            HashMap<String, String> torusLoginInfoMap = (HashMap<String, String> ) new HashMap<String,String>();
+            torusLoginInfoMap.put("email",userInfo.getEmail());
+            torusLoginInfoMap.put("name",userInfo.getName());
+            torusLoginInfoMap.put("id",userInfo.getVerifierId());
+            torusLoginInfoMap.put("profileImage",userInfo.getProfileImage());
+            torusLoginInfoMap.put("privateKey", torusLoginResponse.getPrivateKey());
+            torusLoginInfoMap.put("publicAddress", torusLoginResponse.getPublicAddress());
 
-        }
+            result.success(torusLoginInfoMap);
+
+
+          } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+
+          }
+        });
       }
   }
 

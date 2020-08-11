@@ -84,6 +84,7 @@ class _MyAppState extends State<MyApp> {
         "samtwo-google",
         "com.googleusercontent.apps.360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3:/oauthredirect");
     _torusLoginInfo = await TorusDirect.triggerLogin();
+    print(_torusLoginInfo);
     setState(() {
       _privateKey = _torusLoginInfo['privateKey'];
       _currentVerifier = "Google";

@@ -8,7 +8,8 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="torus_direct_example"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.AppCompat.Light">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -39,13 +40,14 @@
             </intent-filter>
         </activity>
         <activity android:name="com.torusresearch.torusdirect.activity.StartUpActivity"
+            android:theme="@style/Theme.AppCompat.Light"
             android:launchMode="singleTop">
             <intent-filter>
                  <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="torusapp"
-                    android:host="org.torusresearch.torusdirectandroid"
+                    android:host="io.flutter.app.FlutterApplication"
                     android:pathPattern="/*"
                     android:pathPrefix="/redirect"/>
             </intent-filter>
