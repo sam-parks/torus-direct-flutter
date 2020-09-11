@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:torus_direct/torus_direct.dart';
 
@@ -84,7 +86,15 @@ class _MyAppState extends State<MyApp> {
         "samtwo-google",
         "com.googleusercontent.apps.360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3:/oauthredirect");
     print(success);
-    Map<dynamic, dynamic> _torusLoginInfo = await TorusDirect.triggerLogin();
+
+    Map<dynamic, dynamic> _torusLoginInfo;
+    if (Platform.isIOS) {
+      _torusLoginInfo = await TorusDirect.triggerLogin();
+    } else if (Platform.isAndroid) {
+      String finalUrl = await TorusDirect.getLoginFinalURL();
+      print(finalUrl);
+    }
+
     print(_torusLoginInfo);
     setState(() {
       _privateKey = _torusLoginInfo['privateKey'];

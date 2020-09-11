@@ -74,4 +74,10 @@ public class GoogleHandler extends AbstractLoginHandler {
         });
 
     }
+
+    @Override
+    public String getFinalUrl() {
+        return finalURL;
+    }
+
 }

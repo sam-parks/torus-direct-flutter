@@ -127,7 +127,7 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
       result.success(handler.getFinalUrl());
 
       case "handleResponse":
-      String response = call.arguments;
+      String response = (String) call.arguments;
       LoginWindowResponse loginWindowResponse = new LoginWindowResponse();
       loginWindowResponse.parseResponse(response);
       ForkJoinPool.commonPool().submit(()-> {

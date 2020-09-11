@@ -52,6 +52,8 @@ final class DiscordUserInfoResult {
 
 public class DiscordHandler extends AbstractLoginHandler {
 
+
+
     private final String RESPONSE_TYPE = "token";
 
     private final String SCOPE = "identify email";
@@ -60,6 +62,7 @@ public class DiscordHandler extends AbstractLoginHandler {
         super(_params);
         this.setFinalUrl();
     }
+
 
     @Override
     protected void setFinalUrl() {
@@ -89,4 +92,12 @@ public class DiscordHandler extends AbstractLoginHandler {
         });
 
     }
+
+    @Override
+    public String getFinalUrl() {
+     return finalURL;
+    }
+
+
+
 }

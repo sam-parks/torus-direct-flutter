@@ -31,6 +31,10 @@ class TorusDirect {
     }
   }
 
+  static Future<String> getLoginFinalURL() async {
+    return await _channel.invokeMethod('getLoginFinalURL');
+  }
+
   // Trigger the Torus Login.
   static Future<Map<dynamic, dynamic>> triggerLogin() async {
     try {
