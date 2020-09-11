@@ -13,4 +13,7 @@ public interface ILoginHandler {
     CompletableFuture<LoginWindowResponse> handleLoginWindow(Context context);
 
     void setResponse(String response);
+
+    String getFinalUrl();
+
 }
