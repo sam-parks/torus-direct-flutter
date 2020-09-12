@@ -111,11 +111,7 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
 
 
           this.subVerifierDetails = new SubVerifierDetails(
-                  LoginType.valueOf(loginProviderString.toUpperCase()),
-                                                  clientId,
-                  verifierName,
-                  new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build());
-
+                  LoginType.valueOf(loginProviderString.toUpperCase()),verifierName,clientId, new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build());
         DirectSdkArgs directSdkArgs = new DirectSdkArgs("torusapp://io.flutter.app.FlutterApplication/redirect", TorusNetwork.TESTNET, "0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183");
           this.torusDirectSDK  = new TorusDirectSdk(directSdkArgs, this.context);
         result.success(true);
@@ -149,33 +145,33 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
 
 
 
-//      case "triggerLogin":
-//        Executors.newFixedThreadPool(10).submit(() -> {
-//          try {
-//            CompletableFuture<TorusLoginResponse> torusLoginResponseCompletableFuture = this.torusDirectSDK.triggerLogin(new SubVerifierDetails(LoginType.GOOGLE,
-//                    "google-lrc",
-//                    "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com",
-//                    new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build()));
-//            TorusLoginResponse torusLoginResponse = torusLoginResponseCompletableFuture.get();
-//            TorusVerifierUnionResponse userInfo = torusLoginResponse.getUserInfo();
-//            Log.d(TorusDirectPlugin.class.getSimpleName(), "Private Key: " + torusLoginResponse.getPrivateKey());
-//            Log.d(TorusDirectPlugin.class.getSimpleName(), "Public Address: " + torusLoginResponse.getPublicAddress());
-//            HashMap<String, String> torusLoginInfoMap = (HashMap<String, String> ) new HashMap<String,String>();
-//            torusLoginInfoMap.put("email",userInfo.getEmail());
-//            torusLoginInfoMap.put("name",userInfo.getName());
-//            torusLoginInfoMap.put("id",userInfo.getVerifierId());
-//            torusLoginInfoMap.put("profileImage",userInfo.getProfileImage());
-//            torusLoginInfoMap.put("privateKey", torusLoginResponse.getPrivateKey());
-//            torusLoginInfoMap.put("publicAddress", torusLoginResponse.getPublicAddress());
-//
-//            result.success(torusLoginInfoMap);
-//
-//
-//          } catch (ExecutionException | InterruptedException e) {
-//            e.printStackTrace();
-//
-//          }
-//        });
+    //  case "triggerLogin":
+    //    Executors.newFixedThreadPool(10).submit(() -> {
+    //      try {
+    //        CompletableFuture<TorusLoginResponse> torusLoginResponseCompletableFuture = this.torusDirectSDK.triggerLogin(new SubVerifierDetails(LoginType.GOOGLE,
+    //                "google-lrc",
+    //                "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com",
+    //                new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build()));
+    //        TorusLoginResponse torusLoginResponse = torusLoginResponseCompletableFuture.get();
+    //        TorusVerifierUnionResponse userInfo = torusLoginResponse.getUserInfo();
+    //        Log.d(TorusDirectPlugin.class.getSimpleName(), "Private Key: " + torusLoginResponse.getPrivateKey());
+    //        Log.d(TorusDirectPlugin.class.getSimpleName(), "Public Address: " + torusLoginResponse.getPublicAddress());
+    //        HashMap<String, String> torusLoginInfoMap = (HashMap<String, String> ) new HashMap<String,String>();
+    //        torusLoginInfoMap.put("email",userInfo.getEmail());
+    //        torusLoginInfoMap.put("name",userInfo.getName());
+    //        torusLoginInfoMap.put("id",userInfo.getVerifierId());
+    //        torusLoginInfoMap.put("profileImage",userInfo.getProfileImage());
+    //        torusLoginInfoMap.put("privateKey", torusLoginResponse.getPrivateKey());
+    //        torusLoginInfoMap.put("publicAddress", torusLoginResponse.getPublicAddress());
+
+    //        result.success(torusLoginInfoMap);
+
+
+    //      } catch (ExecutionException | InterruptedException e) {
+    //        e.printStackTrace();
+
+    //      }
+    //    });
       }
   }
 

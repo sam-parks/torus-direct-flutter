@@ -1,6 +1,9 @@
 library torus_direct;
 
+import 'package:android_intent/android_intent.dart';
 import 'package:flutter/services.dart';
+
+import 'login_window_response.dart';
 
 class TorusDirect {
   static const _channel = const MethodChannel('torus.flutter.dev/torus-direct');
@@ -43,6 +46,14 @@ class TorusDirect {
       print(e);
       throw e;
     }
+  }
+
+  static Future<LoginWindowResponse> handleLoginWindow(String finalURL) async {
+    AndroidIntent intent = AndroidIntent(
+      action: 'action_view',
+      data: finalURL,
+    );
+    await intent.launch();
   }
 }
 

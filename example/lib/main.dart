@@ -80,19 +80,23 @@ class _MyAppState extends State<MyApp> {
     bool success = await TorusDirect.setVerifierDetails(
         LoginType.installed.value,
         VerifierType.singleLogin.value,
-        "samtwo-google",
-        "360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3.apps.googleusercontent.com",
+        "google-lrc",
+        "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com",
         LoginProvider.google.value,
-        "samtwo-google",
-        "com.googleusercontent.apps.360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3:/oauthredirect");
+        "google-lrc",
+        "com.googleusercontent.apps.221898609709-obfn3p63741l5333093430j3qeiinaa8:/oauthredirect");
     print(success);
 
     Map<dynamic, dynamic> _torusLoginInfo;
     if (Platform.isIOS) {
       _torusLoginInfo = await TorusDirect.triggerLogin();
     } else if (Platform.isAndroid) {
+      print("getting final url");
       String finalUrl = await TorusDirect.getLoginFinalURL();
       print(finalUrl);
+      await TorusDirect.handleLoginWindow(finalUrl);
+
+      return;
     }
 
     print(_torusLoginInfo);
@@ -159,7 +163,14 @@ class _MyAppState extends State<MyApp> {
         LoginProvider.discord.value,
         "discord-shubs",
         "flutter://flutter-ios/oauthCallback");
-    _torusLoginInfo = await TorusDirect.triggerLogin();
+
+    Map<dynamic, dynamic> _torusLoginInfo;
+    if (Platform.isIOS) {
+      _torusLoginInfo = await TorusDirect.triggerLogin();
+    } else if (Platform.isAndroid) {
+      String finalUrl = await TorusDirect.getLoginFinalURL();
+      print(finalUrl);
+    }
     setState(() {
       _currentVerifier = "Discord";
       _privateKey = _torusLoginInfo['privateKey'];
