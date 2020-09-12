@@ -65,4 +65,10 @@ public class RedditHandler extends AbstractLoginHandler {
         });
 
     }
+
+    @Override
+    public String getFinalUrl() {
+        return finalURL;
+    }
+
 }

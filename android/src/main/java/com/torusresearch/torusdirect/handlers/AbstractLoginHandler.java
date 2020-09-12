@@ -24,6 +24,11 @@ public abstract class AbstractLoginHandler implements ILoginHandler {
     protected String finalURL;
     private CompletableFuture<LoginWindowResponse> loginWindowResponseCompletableFuture;
 
+
+    public String getFinalURL(){
+        return finalURL;
+    }
+
     public AbstractLoginHandler(CreateHandlerParams _params) {
         params = _params;
         loginWindowResponseCompletableFuture = new CompletableFuture<>();

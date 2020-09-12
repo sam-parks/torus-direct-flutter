@@ -101,4 +101,11 @@ public class FacebookHandler extends AbstractLoginHandler {
         });
 
     }
+
+    @Override
+    public String getFinalUrl() {
+        return this.finalURL;
+    }
+
+
 }

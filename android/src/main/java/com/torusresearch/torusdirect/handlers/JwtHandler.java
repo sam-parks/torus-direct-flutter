@@ -135,4 +135,10 @@ public class JwtHandler extends AbstractLoginHandler {
             return new TorusVerifierResponse(email, name, picture, this.params.getVerifier(), Helpers.getVerifierId(result, typeOfLogin, verifierIdField, isVerifierIdCaseSensitive), typeOfLogin);
         });
     }
+
+    @Override
+    public String getFinalUrl() {
+        return finalURL;
+    }
+
 }

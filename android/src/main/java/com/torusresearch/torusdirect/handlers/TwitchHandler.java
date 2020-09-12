@@ -92,4 +92,10 @@ public class TwitchHandler extends AbstractLoginHandler {
         });
 
     }
+
+    @Override
+    public String getFinalUrl() {
+        return finalURL;
+    }
+
 }

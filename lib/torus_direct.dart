@@ -1,13 +1,16 @@
 library torus_direct;
 
+import 'package:android_intent/android_intent.dart';
 import 'package:flutter/services.dart';
+
+import 'login_window_response.dart';
 
 class TorusDirect {
   static const _channel = const MethodChannel('torus.flutter.dev/torus-direct');
 
   // Set your verifier options for your logins.
 
-  static Future<void> setVerifierDetails(
+  static Future<bool> setVerifierDetails(
       String loginType,
       String verifierType,
       String verifierName,
@@ -16,7 +19,7 @@ class TorusDirect {
       String verifier,
       String redirectURL) async {
     try {
-      await _channel.invokeMethod('setVerifierDetails', {
+      return await _channel.invokeMethod('setVerifierDetails', {
         "loginType": loginType,
         "verifierType": verifierType,
         "verifierName": verifierName,
@@ -27,7 +30,12 @@ class TorusDirect {
       });
     } on PlatformException catch (e) {
       print(e);
+      return false;
     }
+  }
+
+  static Future<String> getLoginFinalURL() async {
+    return await _channel.invokeMethod('getLoginFinalURL');
   }
 
   // Trigger the Torus Login.
@@ -38,6 +46,14 @@ class TorusDirect {
       print(e);
       throw e;
     }
+  }
+
+  static Future<LoginWindowResponse> handleLoginWindow(String finalURL) async {
+    AndroidIntent intent = AndroidIntent(
+      action: 'action_view',
+      data: finalURL,
+    );
+    await intent.launch();
   }
 }
 

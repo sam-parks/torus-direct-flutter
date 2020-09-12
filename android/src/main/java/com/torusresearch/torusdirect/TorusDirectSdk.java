@@ -38,7 +38,7 @@ import java8.util.concurrent.CompletableFuture;
 
 
 public class TorusDirectSdk {
-    private final DirectSdkArgs directSdkArgs;
+    public final DirectSdkArgs directSdkArgs;
     private final FetchNodeDetails nodeDetailManager;
     private final Context context;
 
