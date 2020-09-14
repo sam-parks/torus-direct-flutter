@@ -1,14 +1,11 @@
 package com.torusresearch.torusdirect;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.content.Context;
 import androidx.annotation.NonNull;
-import android.os.Bundle;
 
 import java.util.HashMap;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -19,9 +16,6 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
-
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import org.torusresearch.torusdirect.TorusDirectSdk;
 import org.torusresearch.torusdirect.interfaces.ILoginHandler;
@@ -35,7 +29,6 @@ import org.torusresearch.torusdirect.types.TorusVerifierUnionResponse;
 
 import java.util.concurrent.ForkJoinPool;
 
-import static com.torusresearch.torusdirect.activity.StartUpActivity.URL;
 
 
 /** TorusDirect */
