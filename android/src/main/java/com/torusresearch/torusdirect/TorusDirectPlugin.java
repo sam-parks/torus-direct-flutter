@@ -20,28 +20,19 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 
-import com.torusresearch.torusdirect.activity.StartUpActivity;
-import com.torusresearch.torusdirect.handlers.HandlerFactory;
-import com.torusresearch.torusdirect.interfaces.ILoginHandler;
-import com.torusresearch.torusdirect.types.CreateHandlerParams;
-import com.torusresearch.torusdirect.types.LoginType;
-import com.torusresearch.torusdirect.types.LoginWindowResponse;
-import com.torusresearch.torusdirect.types.SubVerifierDetails;
-import com.torusresearch.torusdirect.types.Auth0ClientOptions;
-import com.torusresearch.torusdirect.types.TorusKey;
-import com.torusresearch.torusdirect.types.TorusLoginResponse;
-import com.torusresearch.torusdirect.types.DirectSdkArgs;
-import com.torusresearch.torusdirect.types.TorusNetwork;
-import com.torusresearch.torusdirect.types.TorusVerifierResponse;
-import com.torusresearch.torusdirect.types.TorusVerifierUnionResponse;
-
-import com.torusresearch.torusdirect.R;
-import com.torusresearch.torusdirect.utils.Helpers;
 
 import androidx.appcompat.app.AppCompatActivity;
-import java8.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
+
+import org.torusresearch.torusdirect.TorusDirectSdk;
+import org.torusresearch.torusdirect.interfaces.ILoginHandler;
+import org.torusresearch.torusdirect.types.Auth0ClientOptions;
+import org.torusresearch.torusdirect.types.DirectSdkArgs;
+import org.torusresearch.torusdirect.types.LoginType;
+import org.torusresearch.torusdirect.types.SubVerifierDetails;
+import org.torusresearch.torusdirect.types.TorusLoginResponse;
+import org.torusresearch.torusdirect.types.TorusNetwork;
+import org.torusresearch.torusdirect.types.TorusVerifierUnionResponse;
+
 import java.util.concurrent.ForkJoinPool;
 
 import static com.torusresearch.torusdirect.activity.StartUpActivity.URL;
