@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:torus_direct/torus_direct.dart';
 
@@ -89,7 +87,7 @@ class _MyAppState extends State<MyApp> {
 
     Map<dynamic, dynamic> _torusLoginInfo;
     _torusLoginInfo = await TorusDirect.triggerLogin();
-    print(_torusLoginInfo);
+
     setState(() {
       _privateKey = _torusLoginInfo['privateKey'];
       _currentVerifier = "Google";
@@ -154,13 +152,8 @@ class _MyAppState extends State<MyApp> {
         "discord-shubs",
         "flutter://flutter-ios/oauthCallback");
 
-    Map<dynamic, dynamic> _torusLoginInfo;
-    if (Platform.isIOS) {
-      _torusLoginInfo = await TorusDirect.triggerLogin();
-    } else if (Platform.isAndroid) {
-      String finalUrl = await TorusDirect.getLoginFinalURL();
-      print(finalUrl);
-    }
+    Map<dynamic, dynamic> _torusLoginInfo = await TorusDirect.triggerLogin();
+
     setState(() {
       _currentVerifier = "Discord";
       _privateKey = _torusLoginInfo['privateKey'];
