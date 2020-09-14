@@ -1,6 +1,4 @@
 PODS:
-  - android_intent (0.0.1):
-    - Flutter
   - BestLogger (0.0.3)
   - BigInt (5.0.0)
   - CryptoSwift (1.0.0)
@@ -34,7 +32,6 @@ PODS:
     - Torus-utils (~> 0.0.1)
 
 DEPENDENCIES:
-  - android_intent (from `.symlinks/plugins/android_intent/ios`)
   - Flutter (from `Flutter`)
   - torus_direct (from `.symlinks/plugins/torus_direct/ios`)
 
@@ -50,15 +47,12 @@ SPEC REPOS:
     - Torus-web3swift
 
 EXTERNAL SOURCES:
-  android_intent:
-    :path: ".symlinks/plugins/android_intent/ios"
   Flutter:
     :path: Flutter
   torus_direct:
     :path: ".symlinks/plugins/torus_direct/ios"
 
 SPEC CHECKSUMS:
-  android_intent: 367df2f1277a74e4a90e14a8ab3df3112d087052
   BestLogger: 70475db073dfab3ec1ba9b58b0bb78126b068eee
   BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:torus_direct/torus_direct.dart';
 
@@ -75,14 +77,27 @@ class _MyAppState extends State<MyApp> {
   }
 
   _googleLogin() async {
-    bool success = await TorusDirect.setVerifierDetails(
-        LoginType.installed.value,
-        VerifierType.singleLogin.value,
-        "google-lrc",
-        "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com",
-        LoginProvider.google.value,
-        "google-lrc",
-        "com.googleusercontent.apps.221898609709-obfn3p63741l5333093430j3qeiinaa8:/oauthredirect");
+    bool success;
+    if (Platform.isIOS) {
+      success = await TorusDirect.setVerifierDetails(
+          LoginType.installed.value,
+          VerifierType.singleLogin.value,
+          "samtwo-google",
+          "360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3.apps.googleusercontent.com",
+          LoginProvider.google.value,
+          "samtwo-google",
+          "com.googleusercontent.apps.360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3:/oauthredirect");
+    } else {
+      success = await TorusDirect.setVerifierDetails(
+          LoginType.installed.value,
+          VerifierType.singleLogin.value,
+          "google-lrc",
+          "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com",
+          LoginProvider.google.value,
+          "google-lrc",
+          "com.googleusercontent.apps.221898609709-obfn3p63741l5333093430j3qeiinaa8:/oauthredirect");
+    }
+
     print(success);
 
     Map<dynamic, dynamic> _torusLoginInfo;

@@ -104,7 +104,7 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
     switch (call.method) {
-
+      
       case "setVerifierDetails":
           System.out.println(call.arguments);
         HashMap<String, String> args = (HashMap<String, String> ) call.arguments;
@@ -143,35 +143,7 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
             }
           });
         });
-        break;
-
-        // Create login handler and return final url to return to Flutter for Dart intent
-//      case "getLoginFinalURL":
-//       handler = HandlerFactory.createHandler(new CreateHandlerParams(subVerifierDetails.getClientId(), subVerifierDetails.getVerifier(),
-//              this.torusDirectSDK.directSdkArgs.getRedirectUri(), subVerifierDetails.getTypeOfLogin(), this.torusDirectSDK.directSdkArgs.getBrowserRedirectUri(), subVerifierDetails.getJwtParams()));
-//      result.success(handler.getFinalUrl());
-//
-//      break;
-//      case "handleResponse":
-//      String response = (String) call.arguments;
-//      LoginWindowResponse loginWindowResponse = new LoginWindowResponse();
-//      loginWindowResponse.parseResponse(response);
-//      ForkJoinPool.commonPool().submit(()-> {
-//        TorusVerifierResponse torusVerifierResponse = handler.getUserInfo(loginWindowResponse).join();
-//        HashMap<String, Object> verifierParams = new HashMap<>();
-//        verifierParams.put("verifier_id", torusVerifierResponse.getVerifierId());
-//        TorusKey torusKey = this.torusDirectSDK.getTorusKey( subVerifierDetails.getVerifier(), torusVerifierResponse.getVerifierId(), verifierParams, !Helpers.isEmpty(loginWindowResponse.getIdToken()) ? loginWindowResponse.getIdToken() : loginWindowResponse.getAccessToken()).join();
-//        HashMap<String, String> torusLoginInfoMap = (HashMap<String, String> ) new HashMap<String,String>();
-//        torusLoginInfoMap.put("email",torusVerifierResponse.getEmail());
-//        torusLoginInfoMap.put("name",torusVerifierResponse.getName());
-//        torusLoginInfoMap.put("id",torusVerifierResponse.getVerifierId());
-//        torusLoginInfoMap.put("profileImage",torusVerifierResponse.getProfileImage());
-//        torusLoginInfoMap.put("privateKey", torusKey.getPrivateKey());
-//        torusLoginInfoMap.put("publicAddress", torusKey.getPublicAddress());
-//
-//          result.success(torusLoginInfoMap);
-//        });
-      
+        break;  
     }
   }
 
