@@ -88,17 +88,7 @@ class _MyAppState extends State<MyApp> {
     print(success);
 
     Map<dynamic, dynamic> _torusLoginInfo;
-    if (Platform.isIOS) {
-      _torusLoginInfo = await TorusDirect.triggerLogin();
-    } else if (Platform.isAndroid) {
-      print("getting final url");
-      String finalUrl = await TorusDirect.getLoginFinalURL();
-      print(finalUrl);
-      await TorusDirect.handleLoginWindow(finalUrl);
-
-      return;
-    }
-
+    _torusLoginInfo = await TorusDirect.triggerLogin();
     print(_torusLoginInfo);
     setState(() {
       _privateKey = _torusLoginInfo['privateKey'];

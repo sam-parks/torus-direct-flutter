@@ -1,6 +1,10 @@
 package com.torusresearch.torusdirect;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.content.Context;
 import androidx.annotation.NonNull;
@@ -16,6 +20,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 
+import com.torusresearch.torusdirect.activity.StartUpActivity;
 import com.torusresearch.torusdirect.handlers.HandlerFactory;
 import com.torusresearch.torusdirect.interfaces.ILoginHandler;
 import com.torusresearch.torusdirect.types.CreateHandlerParams;
@@ -38,6 +43,8 @@ import java8.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
+
+import static com.torusresearch.torusdirect.activity.StartUpActivity.URL;
 
 
 /** TorusDirect */
@@ -98,7 +105,7 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
     switch (call.method) {
 
-      case "setVerifierDetails": 
+      case "setVerifierDetails":
           System.out.println(call.arguments);
         HashMap<String, String> args = (HashMap<String, String> ) call.arguments;
           String verifierTypeString  =  args.get("verifierType");
@@ -115,6 +122,22 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
         DirectSdkArgs directSdkArgs = new DirectSdkArgs("torusapp://io.flutter.app.FlutterApplication/redirect", TorusNetwork.TESTNET, "0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183");
           this.torusDirectSDK  = new TorusDirectSdk(directSdkArgs, this.context);
         result.success(true);
+        break;
+
+      case "triggerLogin" :
+        HashMap<String, String> torusLoginInfoMap2 = new HashMap();
+        ForkJoinPool.commonPool().submit(() -> {
+            TorusLoginResponse torusLoginResponse = this.torusDirectSDK.triggerLogin(subVerifierDetails).join();
+          torusLoginInfoMap2.put("privateKey", torusLoginResponse.getPrivateKey());
+          torusLoginInfoMap2.put("publicAddress", torusLoginResponse.getPublicAddress());
+          new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+              result.success(torusLoginInfoMap2);
+            }
+          });
+        });
+        break;
 
         // Create login handler and return final url to return to Flutter for Dart intent
       case "getLoginFinalURL":
@@ -122,6 +145,7 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
               this.torusDirectSDK.directSdkArgs.getRedirectUri(), subVerifierDetails.getTypeOfLogin(), this.torusDirectSDK.directSdkArgs.getBrowserRedirectUri(), subVerifierDetails.getJwtParams()));
       result.success(handler.getFinalUrl());
 
+      break;
       case "handleResponse":
       String response = (String) call.arguments;
       LoginWindowResponse loginWindowResponse = new LoginWindowResponse();
@@ -138,7 +162,6 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
         torusLoginInfoMap.put("profileImage",torusVerifierResponse.getProfileImage());
         torusLoginInfoMap.put("privateKey", torusKey.getPrivateKey());
         torusLoginInfoMap.put("publicAddress", torusKey.getPublicAddress());
-
 
           result.success(torusLoginInfoMap);
         });
@@ -172,7 +195,7 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
 
     //      }
     //    });
-      }
+    }
   }
 
   @Override
