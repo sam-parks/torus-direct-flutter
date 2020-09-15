@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.torusresearch.torusdirect">
+  package="org.torusresearch.torusdirect">
    <application>
-    <activity android:name="com.torusresearch.torusdirect.activity.StartUpActivity"
+    <activity android:name="org.torusresearch.torusdirect.activity.StartUpActivity"
             android:theme="@style/Theme.AppCompat.Light"
             android:launchMode="singleTop">
             <intent-filter>
