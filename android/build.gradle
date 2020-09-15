@@ -51,6 +51,6 @@ android {
 
 dependencies{
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api 'org.torusresearch:torus-direct-android-sdk:1.0.2'
+    api 'org.torusresearch:torus-direct-android-sdk:1.0.3'
 }
 
