@@ -1,5 +1,4 @@
 library torus_direct;
-
 import 'package:flutter/services.dart';
 
 class TorusDirect {
@@ -7,7 +6,7 @@ class TorusDirect {
 
   // Set your verifier options for your logins.
 
-  static Future<void> setVerifierDetails(
+  static Future<bool> setVerifierDetails(
       String loginType,
       String verifierType,
       String verifierName,
@@ -16,7 +15,7 @@ class TorusDirect {
       String verifier,
       String redirectURL) async {
     try {
-      await _channel.invokeMethod('setVerifierDetails', {
+      return await _channel.invokeMethod('setVerifierDetails', {
         "loginType": loginType,
         "verifierType": verifierType,
         "verifierName": verifierName,
@@ -27,8 +26,10 @@ class TorusDirect {
       });
     } on PlatformException catch (e) {
       print(e);
+      return false;
     }
   }
+
 
   // Trigger the Torus Login.
   static Future<Map<dynamic, dynamic>> triggerLogin() async {
