@@ -51,6 +51,6 @@ android {
 
 dependencies{
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':torusdirect')
+    implementation 'org.torusresearch:torus-direct-android-sdk:feat~new-activity-SNAPSHOT'
 }
 

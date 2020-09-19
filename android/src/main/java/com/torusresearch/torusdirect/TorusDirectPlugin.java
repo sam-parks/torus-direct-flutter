@@ -42,7 +42,6 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
   private MethodChannel channel;
   private TorusDirectSdk torusDirectSDK;
   private SubVerifierDetails subVerifierDetails;
-  private ILoginHandler handler;
 
 
   public void  onDetachedFromActivity() {
@@ -102,7 +101,7 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
 
 
           this.subVerifierDetails = new SubVerifierDetails(
-                  LoginType.valueOf(loginProviderString.toUpperCase()),verifierName,clientId, new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build());
+                  LoginType.valueOf(loginProviderString.toUpperCase()),verifierName,clientId, new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build(),true);
         DirectSdkArgs directSdkArgs = new DirectSdkArgs("torusapp://io.flutter.app.FlutterApplication/redirect", TorusNetwork.TESTNET, "0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183");
           this.torusDirectSDK  = new TorusDirectSdk(directSdkArgs, this.context);
         result.success(true);
