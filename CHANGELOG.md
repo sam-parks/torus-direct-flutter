@@ -5,3 +5,7 @@
 ## [1.0.0+2] - 2020-08-06
  
 * Dynamically retrieving node endpoints. 
+
+## [1.0.0+3] - 2020-09-19
+
+* Support for Android. 
