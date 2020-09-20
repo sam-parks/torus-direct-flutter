@@ -77,25 +77,31 @@ class _MyAppState extends State<MyApp> {
   }
 
   _googleLogin() async {
+   
+    DirectSdkArgs args = DirectSdkArgs(
+        "torusapp://org.torusresearch.torusdirectandroid/redirect",
+        TorusNetwork.TESTNET,
+        "0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183",
+        "torusapp://org.torusresearch.torusdirectandroid/redirect");
+
     bool success;
     if (Platform.isIOS) {
-      success = await TorusDirect.setVerifierDetails(
-          LoginType.installed.value,
-          VerifierType.singleLogin.value,
-          "samtwo-google",
-          "360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3.apps.googleusercontent.com",
-          LoginProvider.google.value,
-          "samtwo-google",
-          "com.googleusercontent.apps.360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3:/oauthredirect");
+      success = await TorusDirect.setOptions(
+        args,
+        LoginProvider.google,
+        LoginType.installed,
+        "samtwo-google",
+        "360801018673-1tmrfbvc2og29c8lmoljpl16ptkc20b3.apps.googleusercontent.com",
+      );
     } else {
-      success = await TorusDirect.setVerifierDetails(
-          LoginType.installed.value,
-          VerifierType.singleLogin.value,
-          "google-lrc",
-          "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com",
-          LoginProvider.google.value,
-          "google-lrc",
-          "com.googleusercontent.apps.221898609709-obfn3p63741l5333093430j3qeiinaa8:/oauthredirect");
+       print("Android google");
+      success = await TorusDirect.setOptions(
+        args,
+        LoginProvider.google,
+        LoginType.installed,
+        "google-lrc",
+        "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com",
+      );
     }
 
     print(success);
@@ -109,69 +115,11 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  _facebookLogin() async {
-    TorusDirect.setVerifierDetails(
-        LoginType.installed.value,
-        VerifierType.singleLogin.value,
-        "facebook-shubs",
-        "659561074900150",
-        LoginProvider.facebook.value,
-        "facebook-shubs",
-        "flutter://flutter-ios/oauthCallback");
-    _torusLoginInfo = await TorusDirect.triggerLogin();
-    setState(() {
-      _privateKey = _torusLoginInfo['privateKey'];
-      _currentVerifier = "Facebook";
-    });
-  }
+  _facebookLogin() async {}
 
-  _twitchLogin() async {
-    TorusDirect.setVerifierDetails(
-        LoginType.web.value,
-        VerifierType.singleLogin.value,
-        "twitch-shubs",
-        "p560duf74b2bidzqu6uo0b3ot7qaao",
-        LoginProvider.twitch.value,
-        "twitch-shubs",
-        "flutter://flutter-ios/oauthCallback");
-    _torusLoginInfo = await TorusDirect.triggerLogin();
-    setState(() {
-      _currentVerifier = "Twitch";
-      _privateKey = _torusLoginInfo['privateKey'];
-    });
-  }
+  _twitchLogin() async {}
 
-  _redditLogin() async {
-    TorusDirect.setVerifierDetails(
-        LoginType.web.value,
-        VerifierType.singleLogin.value,
-        "reddit-shubs",
-        "rXIp6g2y3h1wqg",
-        LoginProvider.reddit.value,
-        "reddit-shubs",
-        "flutter://flutter-ios/oauthCallback");
-    _torusLoginInfo = await TorusDirect.triggerLogin();
-    setState(() {
-      _currentVerifier = "Reddit";
-      _privateKey = _torusLoginInfo['privateKey'];
-    });
-  }
+  _redditLogin() async {}
 
-  _discordLogin() async {
-    TorusDirect.setVerifierDetails(
-        LoginType.web.value,
-        VerifierType.singleLogin.value,
-        "discord-shubs",
-        "700259843063152661",
-        LoginProvider.discord.value,
-        "discord-shubs",
-        "flutter://flutter-ios/oauthCallback");
-
-    Map<dynamic, dynamic> _torusLoginInfo = await TorusDirect.triggerLogin();
-
-    setState(() {
-      _currentVerifier = "Discord";
-      _privateKey = _torusLoginInfo['privateKey'];
-    });
-  }
+  _discordLogin() async {}
 }

@@ -1,4 +1,5 @@
 library torus_direct;
+
 import 'package:flutter/services.dart';
 
 class TorusDirect {
@@ -6,30 +7,29 @@ class TorusDirect {
 
   // Set your verifier options for your logins.
 
-  static Future<bool> setVerifierDetails(
-      String loginType,
-      String verifierType,
-      String verifierName,
-      String clientId,
-      String loginProvider,
-      String verifier,
-      String redirectURL) async {
+  static Future<bool> setOptions(
+    DirectSdkArgs args,
+    LoginProvider loginProvider,
+    LoginType loginType,
+    String verifier,
+    String clientId,
+  ) async {
     try {
-      return await _channel.invokeMethod('setVerifierDetails', {
-        "loginType": loginType,
-        "verifierType": verifierType,
-        "verifierName": verifierName,
-        "clientId": clientId,
-        "loginProvider": loginProvider,
+      return await _channel.invokeMethod('setOptions', {
+        "redirectUri": args.redirectUri,
+        "proxyContractAddress": args.proxyContractAddress,
+        "browserRedirectUri": args.browserRedirectUri,
+        "network": args.network.value,
+        "loginType": loginType.value,
         "verifier": verifier,
-        "redirectURL": redirectURL
+        "clientId": clientId,
+        "loginProvider": loginProvider.value,
       });
     } on PlatformException catch (e) {
       print(e);
       return false;
     }
   }
-
 
   // Trigger the Torus Login.
   static Future<Map<dynamic, dynamic>> triggerLogin() async {
@@ -42,11 +42,14 @@ class TorusDirect {
   }
 }
 
-enum VerifierType {
-  singleLogin,
-  singleIdVerifier,
-  andAggregateVerifier,
-  orAggregateVerifier
+class DirectSdkArgs {
+  String redirectUri;
+  TorusNetwork network;
+  String proxyContractAddress;
+  String browserRedirectUri;
+
+  DirectSdkArgs(this.redirectUri, this.network, this.proxyContractAddress,
+      this.browserRedirectUri);
 }
 
 enum LoginType { web, installed }
@@ -68,23 +71,19 @@ extension LoginTypeExtension on LoginType {
   }
 }
 
-extension VerifierExtension on VerifierType {
+enum TorusNetwork { MAINNET, TESTNET }
+
+extension TestNetworkExtension on TorusNetwork {
   String get value {
     switch (this) {
-      case VerifierType.singleLogin:
-        return "single_login";
+      case TorusNetwork.MAINNET:
+        return 'MAINNET';
         break;
-      case VerifierType.singleIdVerifier:
-        return "single_id_verifier";
-        break;
-      case VerifierType.andAggregateVerifier:
-        return "and_aggregate_verifier";
-        break;
-      case VerifierType.orAggregateVerifier:
-        return "or_aggregate_verifier";
+      case TorusNetwork.TESTNET:
+        return 'TESTNET';
         break;
       default:
-        return "single_login";
+        return 'TESTNET';
     }
   }
 }
