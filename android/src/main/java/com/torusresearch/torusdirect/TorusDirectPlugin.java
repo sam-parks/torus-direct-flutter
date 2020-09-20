@@ -87,45 +87,55 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
     switch (call.method) {
-      
-      case "setVerifierDetails":
+      case "setOptions":
           System.out.println(call.arguments);
         HashMap<String, String> args = (HashMap<String, String> ) call.arguments;
-          String verifierTypeString  =  args.get("verifierType");
           String loginProviderString =  args.get("loginProvider");
+          String networkString = args.get("network");
           String clientId   =  args.get("clientId");
-          String verifierName   = args.get("verifierName");
-          String redirectURL  =  args.get("redirectURL");
+          String verifier   = args.get("verifier");
+          String redirectUri = args.get("redirectUri");
+          String proxyContractAddress = args.get("proxyContractAddress");
 
-        Log.d(TorusDirectPlugin.class.getSimpleName(), "Verifier Type: " + verifierTypeString);
+        System.out.println(proxyContractAddress);
 
-
+        try{
           this.subVerifierDetails = new SubVerifierDetails(
-                  LoginType.valueOf(loginProviderString.toUpperCase()),verifierName,clientId, new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build(),true);
-        DirectSdkArgs directSdkArgs = new DirectSdkArgs("torusapp://io.flutter.app.FlutterApplication/redirect", TorusNetwork.TESTNET, "0x4023d2a0D330bF11426B12C6144Cfb96B7fa6183");
+                  LoginType.valueOf(loginProviderString.toUpperCase()),verifier,clientId, new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build(),true);
+          DirectSdkArgs directSdkArgs = new DirectSdkArgs(redirectUri, TorusNetwork.valueOf(networkString.toUpperCase()),proxyContractAddress);
           this.torusDirectSDK  = new TorusDirectSdk(directSdkArgs, this.context);
-        result.success(true);
-        break;
+          result.success(true);
+          break;
+        }catch(Exception e){
+          System.out.println(e);
+        }
+
+
 
       case "triggerLogin" :
-        HashMap<String, String> torusLoginInfoMap = new HashMap();
-        ForkJoinPool.commonPool().submit(() -> {
+        try {
+          HashMap<String, String> torusLoginInfoMap = new HashMap();
+          ForkJoinPool.commonPool().submit(() -> {
             TorusLoginResponse torusLoginResponse = this.torusDirectSDK.triggerLogin(subVerifierDetails).join();
-          TorusVerifierUnionResponse userInfo = torusLoginResponse.getUserInfo();
-          torusLoginInfoMap.put("privateKey", torusLoginResponse.getPrivateKey());
-          torusLoginInfoMap.put("publicAddress", torusLoginResponse.getPublicAddress());
-          torusLoginInfoMap.put("email",userInfo.getEmail());
-          torusLoginInfoMap.put("name",userInfo.getName());
-          torusLoginInfoMap.put("id",userInfo.getVerifierId());
-          torusLoginInfoMap.put("profileImage",userInfo.getProfileImage());
+            TorusVerifierUnionResponse userInfo = torusLoginResponse.getUserInfo();
+            torusLoginInfoMap.put("privateKey", torusLoginResponse.getPrivateKey());
+            torusLoginInfoMap.put("publicAddress", torusLoginResponse.getPublicAddress());
+            torusLoginInfoMap.put("email",userInfo.getEmail());
+            torusLoginInfoMap.put("name",userInfo.getName());
+            torusLoginInfoMap.put("id",userInfo.getVerifierId());
+            torusLoginInfoMap.put("profileImage",userInfo.getProfileImage());
 
-          new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-              result.success(torusLoginInfoMap);
-            }
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+              @Override
+              public void run() {
+                result.success(torusLoginInfoMap);
+              }
+            });
           });
-        });
+        }catch (Exception e){
+          System.out.println(e);
+        }
+
         break;  
     }
   }
