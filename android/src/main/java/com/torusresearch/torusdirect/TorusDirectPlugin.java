@@ -91,14 +91,9 @@ public class TorusDirectPlugin  implements FlutterPlugin, MethodCallHandler, Act
       case "setVerifierDetails":
           System.out.println(call.arguments);
         HashMap<String, String> args = (HashMap<String, String> ) call.arguments;
-          String verifierTypeString  =  args.get("verifierType");
           String loginProviderString =  args.get("loginProvider");
           String clientId   =  args.get("clientId");
           String verifierName   = args.get("verifierName");
-          String redirectURL  =  args.get("redirectURL");
-
-        Log.d(TorusDirectPlugin.class.getSimpleName(), "Verifier Type: " + verifierTypeString);
-
 
           this.subVerifierDetails = new SubVerifierDetails(
                   LoginType.valueOf(loginProviderString.toUpperCase()),verifierName,clientId, new Auth0ClientOptions.Auth0ClientOptionsBuilder("").build(),true);
